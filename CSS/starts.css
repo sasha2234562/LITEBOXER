@@ -1,0 +1,368 @@
+*{
+   padding: 0;
+   margin: 0;
+}
+.wraper {
+   font: 1.2em "Fira Sans", sans-serif;
+   font-weight: 700;
+}
+video {
+   position: absolute;
+   min-width: 100%;
+   max-width: 100%;
+}
+.wraper-video-menu {
+   /* background-color: black; */
+   color: white;
+   font-size: 35px;
+   display: grid;
+   grid-template-columns: 1fr 2fr 3fr 3fr 4fr 1.5fr 1.6fr 1.5fr;
+   /* grid-column-gap: 1px; */
+   position: relative;
+}
+.wraper-video-menu-links{
+   background-color: rgba(0, 0, 0, 0.473);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-top: 3px solid white;
+   border-left: 3px solid white;
+   border-bottom: 3px solid white;
+}
+.wraper-video-menu div:last-child {
+   border-right: 3px solid white;
+}
+.wraper-video-menu-links:hover {
+   background-color: rgba(110, 110, 110, 0.935);
+   cursor: pointer;
+   transition: 0.5s;
+}
+.wraper-video-menu img {
+   max-width: 60px;
+   padding: 0.5%;
+}
+.menu-burger {
+   font-size: 50px;
+}
+.video-content-conteiner {
+   position: relative;
+   color: rgba(255, 255, 255, 0.893);
+   display: grid;
+   width: 76%;
+   left: 12%;
+   top: 210px;
+}
+.video-text div{
+margin: 14px;
+}
+h1 {
+font-size: 79px;
+}
+.video-content-conteiner h2 {
+   font-size: 42px;
+}
+.start-button  button{
+font-size: 25px;
+padding: 9px;
+border: 6px solid rgb(43, 251, 64);
+font: 1.2em "Fira Sans", sans-serif;
+font-weight: 700;
+margin: 14px;
+}
+.start-button button:hover {
+   cursor: pointer;
+   background-color: rgb(43, 251, 64);
+}
+.litboxer-more-wraper {
+   display: flex;
+   margin: 23% 9% 5% 9%;
+}
+.litboxer-more-wraper div{
+   margin: 1%;
+   text-align: center;
+}
+.litboxer-more-wraper-column {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+}
+.litboxer-more-wraper-column button {
+   padding: 10px 29px ;
+   font-size: 25px;
+   background-color: white;
+   width: 70%;
+   border: 6px solid  rgb(43, 251, 64);  
+   font: 1.2em "Fira Sans", sans-serif;
+   font-weight: 700;
+   margin: 8%;
+}
+.litboxer-more-wraper-column button:hover {
+   background-color: rgb(43, 251, 64);
+   cursor: pointer;
+}
+.litboxer-more-wraper-column p {
+   font-size: 15px;
+   font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+.litboxer-more-wraper-column img {
+   width: 100%;
+   height: 400px;
+}
+.litboxer-more-wraper-column h2{
+   margin: 8%;
+}
+.punch-to-the-beat {
+   background-color: black;
+   color: white;
+}
+.punch-to-the-beat-wraper {
+   padding: 13%;
+   display: flex;
+   justify-content: space-around;
+}
+.punch-beat-text {
+   width: 40%;
+}
+.punch-beat-text-wraper h2{
+   font-size: 42px;
+}
+.punch-beat-text-wraper p{
+   color: rgb(172, 172, 172);
+   margin: 3% 0;
+}
+.see_it_in_action {
+   padding: 10px 15px ;
+   font-size: 19px;
+   background-color: white;
+   width: 50%;
+   border: 6px solid  rgb(43, 251, 64);  
+   font-family: serif;
+   font-weight: 700;
+   margin: 8% 0;
+}
+.see_it_in_action:hover {
+   background-color: rgb(43, 251, 64);
+   cursor: pointer;
+}
+.video-youtobe iframe{
+   width: 500px;
+   height: 400px;
+}
+/* текст WORKOUTS TO MATCH YOUR LIFESTYLE */
+.workouts__your_lifestyle-wraper {
+   margin: 10% 15%;
+}
+.workouts__your_lifestyle-wraper h2{
+   margin: 3% 0;
+
+}
+.workouts__your_lifestyle {
+display: flex;
+justify-content: space-between;
+align-items:flex-start;
+}
+.workouts__your_lifestyle p{
+   width: 40%;
+}
+/* кнопка compare_plans */
+.compare_plans {
+   padding: 1% 5%;
+   background-color: white;
+   border: 4px solid  rgb(43, 251, 64);  
+   font: 1em "Fira Sans", sans-serif;
+   font-weight: 500;
+   cursor: pointer;
+}
+.compare_plans:hover{
+   background-color:  rgb(43, 251, 64);
+}
+/* тренажеры liteboxer */
+.technics_liteboxer-conteiner {
+display: flex;
+justify-content: space-between;
+text-align: center;
+}
+/* ОДНО ЧЛЕНСТВО ДЛЯ ВСЕЙ СЕМЬИ  */
+.bonus_family-conteiner {
+   background-color: black;
+   color: white;
+   margin-top: 5%;
+   height: 80%;
+}
+.bonus_family {
+   display: flex;
+   /* justify-content: space-evenly; */
+   align-items: center;
+   padding: 7% 5% 7% 13%;
+}
+.bonus-afisha {
+   display: flex;
+   justify-content: center;
+}
+.bonus-afisha img {
+   width: 80%;
+   justify-content: right;
+}
+.bonus-text_content {
+   width: 100%;
+}
+.header_bonus-family h2{
+   margin-bottom: 8%;
+}
+.bonus-family_learn-more {
+   padding: 10px 29px ;
+   font-size: 25px;
+   background-color: white;
+   border: 6px solid  rgb(43, 251, 64);  
+   font: 1.2em "Fira Sans", sans-serif;
+   font-weight: 700;
+   margin: 8% 0 ;
+   color: white;
+   background-color: black;
+}
+.bonus-family_learn-more:hover {
+   background-color:  rgb(43, 251, 64);
+}
+/* Видео  с бойцами */
+
+.we-re_all_fichters-conteiner {
+   background-color: black;
+   color: white;
+   padding: 3% 14% ;
+
+}
+.we-re_all_fichters-wraper-text {
+margin: 5%;
+}
+.we-re_all_fichters-header {
+   margin: 8% 0;
+}
+.we-re_all_fichters-text {
+   display: flex;
+   align-items: center;
+}
+.we-re_all_fichters-text p{
+   width: 40%;
+   margin: 0 7% 0 0;
+}
+.we-re_all_fichters-button {
+   padding: 10px 20px;
+   font-size: 20px;
+   background-color: white;
+   border: 6px solid  rgb(43, 251, 64);  
+   font: 1.2em "Fira Sans", sans-serif;
+   font-weight: 700;
+   color: white;
+   background-color: black;
+   justify-content: center;
+}
+.we-re_all_fichters-button:hover {
+   background-color:  rgb(43, 251, 64);
+   cursor: pointer;
+}
+.we-re_all_fichters-video {
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+padding: 1.4%;
+}
+/* email и информация о продукте */
+.liteboxer-contacts_info {
+   background-color: rgb(36, 35, 35);
+}
+.liteboxer-contacts_info-flex_conteiner {
+   display: flex;
+   color: white;
+   padding: 2%;
+   justify-content: space-around;
+}
+.liteboxer-contacts_info-flex_conteiner div{
+   margin: 11px;
+}
+.subscribe-mail {
+   flex-basis: 50%;
+   padding-top: 2%;
+}
+.subscribe-mail-text{
+   padding-bottom: 3%;
+}
+.subscribe-mail_input {
+   display: flex;
+}
+#input-mail{
+   width: 47%;
+   height: 35px;
+   background-color:  rgb(36, 35, 35);
+   border: 3px solid  white;
+   font-size: 23px;
+   padding: 1%;
+}
+#input-mail-button{
+   width: 25%;
+   font-size: 20px;
+   margin: 0 5%;
+   background-color:  rgb(36, 35, 35);
+   color: white;
+   border: 3px solid white;
+   cursor: pointer;
+}
+.liteboxer-info-all div{
+cursor: pointer;
+padding: 3%;
+}
+.liteboxer-info-all_hader {
+font-size: 25px;
+}
+@media screen and (max-width : 1200px) {
+   .technics_liteboxer-conteiner {
+      display: block;
+      padding: auto;
+   }
+   .bonus_family {
+      display: block;
+      padding: auto;
+   }
+   .bonus_family-conteiner {
+      height: 100%;
+   }
+   .bonus-afisha img {
+      width: 80%;
+      justify-content: center;
+      margin-bottom: 3%;
+   }
+   .we-re_all_fichters-video {
+      max-width: 100%;
+   }
+   .we-re_all_fichters-video div{
+      margin: 15px;
+   }
+}
+@media screen and (max-width : 760px) {
+   .litboxer-more-wraper {
+      display: block;
+      margin-top: 100%;
+      position: relative;
+   }
+   .video-content-conteiner {
+      display: none;
+   }
+   video{
+      position: absolute;
+   }
+   .we-re_all_fichters-video {
+      display: block;
+   }
+   .we-re_all_fichters-text {
+      display: block;
+   }
+   .delete {
+      display: none;
+      min-width: 100%;
+      
+   }
+   .wraper-video-menu {
+      display: flex;
+     
+   }
+}

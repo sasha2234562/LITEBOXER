@@ -1,0 +1,10 @@
+/* GT America Medium */
+@font-face {
+  font-family: "GT America Medium";
+  font-weight: normal;
+  src: url('//cdn.shopify.com/s/files/1/0046/1828/9223/t/58/assets/gt-america-standard-medium.woff2?v=1611336058') format("woff2"),
+       url('//cdn.shopify.com/s/files/1/0046/1828/9223/t/58/assets/gt-america-standard-medium.woff?v=1611336058') format("woff"),
+       url('//cdn.shopify.com/s/files/1/0046/1828/9223/t/58/assets/gt-america-standard-medium.eot?v=1611336057') format("eot");
+  font-display: swap;
+}
+

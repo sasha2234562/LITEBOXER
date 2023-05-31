@@ -1,0 +1,319 @@
+// @TODO: Add a simple esbuild config to transpile and minimize this.
+
+window.liteboxer = window.liteboxer || {};
+
+function GetFBPcookie() {
+  var re = new RegExp("_fbp=([^;]+)");
+  var value = re.exec(document.cookie);
+  if (value !== null && value[0] !== null) {
+    return value[0].substring(5);
+  } else {
+    return "";
+  }
+}
+
+(function () {
+  const breakpointWidth = 768;
+
+  document.addEventListener("page:loaded", function () {
+    const videos = document.querySelectorAll("div.video-content");
+    videos.forEach((e) => {
+      var elem = window.jQuery(e);
+      elem.removeClass("video-content").addClass("video-container");
+      var videoClasses = Array.from(e.classList.values()).filter((x) =>
+        x.startsWith("video-")
+      );
+      var foreground = !e.classList.contains("video-background");
+
+      // @TODO: Check for error on .find()
+      // @TODO: Convert some of this to jQuery
+      var [, cdnPath] = videoClasses
+        .find((x) => x.startsWith("video-videos-cdn-"))
+        .match(/^video-videos-cdn-(.*)$/);
+      var mobileVideo = `https://assets.prod.liteboxer.net/static/video/${cdnPath}-vertical.mp4`;
+      var desktopVideo = `https://assets.prod.liteboxer.net/static/video/${cdnPath}-horizontal.mp4`;
+
+      /*
+      var aspectRatios = videoClasses.find((x) =>
+        x.startsWith("video-aspect-")
+      );
+      if (aspectRatios) {
+        console.log(aspectRatios);
+        var [, desktopW, desktopH, mobileW, mobileH] = aspectRatios.match(
+          /^video-aspect-(\d+)-(\d+)-(\d+)-(\d+)$/
+        );
+      }
+      */
+
+      var elementClasses = ["video"];
+      if (foreground) {
+        elementClasses.push("video-foreground");
+      } else {
+        elementClasses.push("video-background");
+      }
+
+      var videoElement = document.createElement("video");
+      videoElement.muted = true;
+      videoElement.autoplay = true;
+      videoElement.loop = true;
+      videoElement.playsInline = true;
+      videoElement.className = elementClasses.join(" ");
+      videoElement.allow = "autoplay; fullscreen";
+      videoElement.setAttribute("frameborder", "0");
+      if (window.innerWidth > breakpointWidth) {
+        videoElement.src = desktopVideo;
+        // if (aspectRatios) {
+        //   elem.css("padding-top", `calc(${desktopW} / ${desktopH} * 100%);`);
+        // }
+      } else {
+        videoElement.src = mobileVideo;
+        // if (aspectRatios) {
+        //   elem.css("padding-top", `calc(${mobileW} / ${mobileH} * 100%);`);
+        // }
+      }
+
+      e.appendChild(videoElement);
+
+      // setInterval(function () {
+      //   videoElement.play().catch(function (error) {});
+      // }, 250);
+
+      var resizeEvt;
+      $(window).resize(function () {
+        var video = $(videoElement);
+        // @TODO: This will fail
+        if (typeof resizeEvt !== "undefined") {
+          clearTimeout(resizeEvt);
+        }
+        resizeEvt = setTimeout(function () {
+          if (
+            $(window).width() < breakpointWidth &&
+            video.attr("src") != mobileVideo
+          ) {
+            video.attr("src", mobileVideo);
+            // if (aspectRatios) {
+            //   elem.css("padding-top", `calc(${mobileW} / ${mobileH} * 100%);`);
+            // }
+          } else if (
+            $(window).width() >= breakpointWidth &&
+            video.attr("src") != desktopVideo
+          ) {
+            video.attr("src", desktopVideo);
+            // if (aspectRatios) {
+            //   elem.css(
+            //     "padding-top",
+            //     `calc(${desktopW} / ${desktopH} * 100%);`
+            //   );
+            // }
+          }
+        }, 100);
+      });
+    });
+  });
+
+  // Newsletter signup code
+  $(document).ready(function () {
+    $("#newsletter-footer").on("submit", function (event) {
+      var form = this;
+      var email = $(form).find("input[name='contact[email]']").val();
+      var analytics = window.analytics;
+      var fbp = GetFBPcookie();
+      $.ajax({
+        type: "POST",
+        // @TODO: Make this a theme setting
+        url: "https://api.prod.liteboxer.net/2021_09/api/identity/external_id",
+        data: JSON.stringify({
+          email: email,
+          acceptsMarketing: true,
+          fbp: fbp,
+        }),
+        success: function (data, textStatus) {
+          jQuery.cookie("lbUser", JSON.stringify(data));
+          if (fbp !== null && fbp !== "") {
+            analytics.identify(data.uuid, {
+              email: data.email,
+              fbp: data.fbp,
+            });
+            analytics.track("Email Entered", {
+              source: "newsletter",
+              fbp: data.fbp,
+            });
+          } else {
+            analytics.identify(data.uuid, {
+              email: data.email,
+            });
+            analytics.track("Email Entered", {
+              source: "newsletter",
+            });
+          }
+          form.submit();
+        },
+        error: function (_, textStatus, errorThrown) {
+          form.submit();
+        },
+        dataType: "json",
+        contentType: "application/json",
+      });
+      event.preventDefault();
+    });
+  });
+
+  // Optimizely and client-side events support
+  $(document).ready(function () {
+    $("button.cart__checkout").on("click", function () {
+      if (window.analytics) {
+        window.analytics.track("Checkout Started", { fbp: GetFBPcookie() });
+      }
+    });
+    $("button.add-to-cart").on("click", function () {
+      if (window.analytics) {
+        productData = {};
+        try {
+          productData = JSON.parse(
+            // @TODO: This will not always be set; handle it better than try{} / finally{}.
+            jQuery("textarea[data-current-variant-json]")[0].innerHTML
+          );
+          window.analytics.track("Product Added", productData);
+        } finally {
+        }
+      }
+    });
+  });
+
+  // Announcement countdown code
+  $(document).ready(function () {
+    $(".announcement .countdown").each(function () {
+      const secondUnit = 1000,
+        minuteUnit = secondUnit * 60,
+        hourUnit = minuteUnit * 60,
+        dayUnit = hourUnit * 24,
+        fadeDuration = 500;
+
+      function updateCountdown(element) {
+        var dateDiff = countdownDate.getTime() - new Date().getTime(),
+          days = Math.floor(dateDiff / dayUnit),
+          hours = Math.floor((dateDiff % dayUnit) / hourUnit),
+          minutes = Math.floor((dateDiff % hourUnit) / minuteUnit),
+          seconds = Math.floor((dateDiff % minuteUnit) / secondUnit);
+
+        if (dateDiff <= 0) {
+          $(element).hide();
+          return;
+        }
+
+        var newText = "";
+        if (days > 0) {
+          newText = newText + days + " days ";
+        }
+        if (hours > 0 || days !== 0) {
+          newText = newText + hours + " hours ";
+        }
+        if (minutes > 0 || hours !== 0 || days !== 0) {
+          newText = newText + minutes + " mins ";
+        }
+        if (seconds > 0 || minutes !== 0 || hours !== 0 || days !== 0) {
+          newText = newText + seconds + " sec";
+        }
+
+        if (seconds === 59) {
+          $(element)
+            .animate({ opacity: 0 }, fadeDuration, function () {
+              $(element).text(newText);
+            })
+            .animate({ opacity: 1 }, fadeDuration);
+        } else {
+          $(element).text(newText);
+        }
+      }
+      try {
+        var countdownDate = new Date($(this).data("countdown-date"));
+        updateCountdown(this);
+        setInterval(updateCountdown, 1000, this);
+      } finally {
+      }
+    });
+  });
+
+  $(document).ready(function () {
+    //Identify from Braze
+    var urlParams = new URLSearchParams(location.search);
+    if (urlParams.has("utm_source") && urlParams.has("id")) {
+      var source = urlParams.get("utm_source");
+      var uuid = urlParams.get("id");
+      if (source == "braze" && uuid.length == 36) {
+        var analytics = window.analytics;
+        fbp = GetFBPcookie();
+        if (fbp !== null && fbp !== "") {
+          analytics.identify(uuid, { fbp: fbp });
+        } else {
+          analytics.identify(uuid);
+        }
+      }
+    }
+  });
+
+  $.initialize("iframe.shogun-video-embed", function () {
+    window.liteboxer.addVimeoEvents(this);
+  });
+
+  window.liteboxer.addVimeoEvents = function (selectorOrElem) {
+    url = $(selectorOrElem).attr("src");
+    if (!/^(https?:)?\/\/((player|www)\.)?vimeo\.com(?=$|\/)/.test(url)) {
+      return;
+    }
+    $(selectorOrElem).on("load", function () {
+      function segmentTrack(eventName, eventProperties) {
+        if (window.analytics) {
+          analytics.track(eventName, eventProperties);
+        }
+      }
+      if (window.Vimeo) {
+        player = new Vimeo.Player(this);
+        var videoStarted = false;
+        var video25Percent = false;
+        var video50Percent = false;
+        var video75Percent = false;
+        var videoCompleted = false;
+        player.on("timeupdate", function (data) {
+          if (data.percent) {
+            if (data.percent > 0 && videoStarted === false) {
+              videoStarted = true;
+              segmentTrack("Video Started", data);
+            }
+            if (data.percent >= 0.25 && video25Percent === false) {
+              video25Percent = true;
+              segmentTrack("Video 25 Percent Completed", data);
+            }
+            if (data.percent >= 0.5 && video50Percent === false) {
+              video50Percent = true;
+              segmentTrack("Video 50 Percent Completed", data);
+            }
+            if (data.percent >= 0.75 && video75Percent === false) {
+              video75Percent = true;
+              segmentTrack("Video 75 Percent Completed", data);
+            }
+            if (data.percent >= 1 && videoCompleted === false) {
+              videoCompleted = true;
+              segmentTrack("Video Completed", data);
+            }
+          }
+        });
+      }
+    });
+  };
+
+  $.initialize(
+    "blockquote.tiktok-embed > iframe[src*='www.tiktok.com']",
+    function () {
+      var that = this;
+      // Unhinged Mobile Safari hack here. I'm sorry.
+      $(this).height(780);
+      $(this).parent().height(780);
+      // setInterval(function () {
+      //   that.style.display = "inline-block";
+      //   that.offsetHeight;
+      //   that.style.display = "";
+      // }, 500);
+    }
+  );
+})();

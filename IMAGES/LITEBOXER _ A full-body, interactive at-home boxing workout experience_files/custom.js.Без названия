@@ -1,0 +1,2 @@
+$(document).ready(function(){$(".h-tab_content").hide(),$(".h-tab_content:first").show(),$(".h-tab_tab-head li").click(function(){$(".h-tab_content").hide();var t=$(this).attr("rel");$("#"+t).fadeIn(),$(".h-tab_tab-head li").removeClass("active"),$(this).addClass("active")}),$(".pdp-tab").hover(function(){$(".active").addClass("no-border")},function(){$("li").removeClass("no-border")})});
+//# sourceMappingURL=/s/files/1/0046/1828/9223/t/95/assets/custom.js.map?v=127920693470109428341642607199

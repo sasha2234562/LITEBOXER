@@ -1,0 +1,10 @@
+/* GT America */
+@font-face {
+  font-family: "GT America";
+  font-weight: normal;
+  src: url('//cdn.shopify.com/s/files/1/0046/1828/9223/t/54/assets/gt-america-standard-light.woff2?v=6627841152995956676') format("woff2"),
+       url('//cdn.shopify.com/s/files/1/0046/1828/9223/t/54/assets/gt-america-standard-light.woff?v=4924381043097619491') format("woff"),
+       url('//cdn.shopify.com/s/files/1/0046/1828/9223/t/54/assets/gt-america-standard-light.eot?v=3516576768159793721') format("eot");
+  font-display: swap;
+}
+
